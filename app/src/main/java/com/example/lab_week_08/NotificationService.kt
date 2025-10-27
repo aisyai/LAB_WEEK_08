@@ -107,7 +107,7 @@ class NotificationService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelId = "001"
             val channelName = "001 Channel"
-            val channelPriority = NotificationManager.IMPORTANCE_DEFAULT
+            val channelPriority = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, channelName, channelPriority)
             val service = ContextCompat.getSystemService(this, NotificationManager::class.java)
             service?.createNotificationChannel(channel)
@@ -124,6 +124,10 @@ class NotificationService : Service() {
             .setContentIntent(pendingIntent)
             .setTicker("Second worker process is done, check it out!")
             .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setCategory(NotificationCompat.CATEGORY_SERVICE)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val returnValue = super.onStartCommand(intent, flags, startId)
