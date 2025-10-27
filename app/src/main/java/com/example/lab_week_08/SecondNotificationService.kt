@@ -10,8 +10,11 @@ import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 class SecondNotificationService : Service() {
 
@@ -72,18 +75,29 @@ class SecondNotificationService : Service() {
         serviceHandler.post {
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             for (i in 5 downTo 0) {
-                Thread.sleep(3000)
+                Thread.sleep(3000L)
                 notificationBuilder.setContentText("Finishing in $i sec…").setSilent(true)
                 notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
             }
+
+            notifyCompletion(Id = intent?.getStringExtra(EXTRA_ID) ?: "002")
+
             stopForeground(STOP_FOREGROUND_REMOVE)
             stopSelf()
         }
         return result
     }
 
+    private fun notifyCompletion(Id: String) {
+        Handler(Looper.getMainLooper()).post {
+            mutableID.value = Id
+        }
+    }
+
     companion object {
         const val NOTIFICATION_ID = 0xCA8
         const val EXTRA_ID = "Id"
+        private val mutableID = MutableLiveData<String>()
+        val trackingCompletion: LiveData<String> = mutableID
     }
 }
