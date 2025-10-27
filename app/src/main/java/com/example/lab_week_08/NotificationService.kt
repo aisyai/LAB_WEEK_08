@@ -145,7 +145,7 @@ class NotificationService : Service() {
     private fun countDownFromTenToZero(notificationBuilder: NotificationCompat.Builder) {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         for (i in 10 downTo 0) {
-            try { Thread.sleep(1000L) } catch (e: InterruptedException) { /* ignore */ }
+            try { Thread.sleep(3000L) } catch (e: InterruptedException) { /* ignore */ }
             notificationBuilder.setContentText("$i seconds until last warning").setSilent(true)
             notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
         }

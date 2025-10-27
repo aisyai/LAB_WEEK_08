@@ -13,7 +13,7 @@ class ThirdWorker(
 
     override fun doWork(): Result {
         val prev = inputData.getString(SecondWorker.OUTPUT_DATA_ID) ?: "noPrev"
-        Thread.sleep(2000)
+        Thread.sleep(3000)
         val outData = Data.Builder()
             .putString(OUTPUT_DATA_ID, "$prev-ThirdDone")
             .build()

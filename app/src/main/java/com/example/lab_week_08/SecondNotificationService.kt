@@ -72,7 +72,7 @@ class SecondNotificationService : Service() {
         serviceHandler.post {
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             for (i in 5 downTo 0) {
-                Thread.sleep(1000)
+                Thread.sleep(3000)
                 notificationBuilder.setContentText("Finishing in $i sec…").setSilent(true)
                 notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
             }
